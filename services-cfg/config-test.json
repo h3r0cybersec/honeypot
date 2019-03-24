@@ -1,0 +1,20 @@
+{
+    "active" : [],
+    "loggers" : [],
+    "servers" : [
+        {
+            "type" : "HTTP",
+            "class" : "ApacheServer",
+            "config" : {
+                "server_address" : ["localhost", 8080],
+                "backlog" : 5,
+                "mode" : "insecure",
+                "timeout" : 5,
+                "cert_path" : null,
+                "threaded" : false,
+                "version" : "",
+                "loggers" : []
+            }
+        }
+    ]
+}
