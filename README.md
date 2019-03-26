@@ -31,8 +31,16 @@ In this way, the first parameter passed concerns the .services file, generated a
 Obviously also in this case if the file is already present and the 'createnow' option is passed, an error will be generated. The second parameter passed represents the configuration file necessary for starting the various services. Also in this case, by convention, this .json file will be saved in the directory **/ services-cfg**.
 
 #### Service Configuration file
-The configuration file of the services activated by the ipod, which is the one found in the / services-cfg path, contains several sections:
+The configuration file of the services activated by the honeypot, which is the one found in the / services-cfg path, contains several sections:
 - **active** => This field is used for communication between monitors and managers, ie the monitor will                   write in the list those that are the services active on the machine, so that the services                 manager knows which services to activate.
 - **loggers** => The various types of loggin systems to use. For example Elastich Search, local file log..
                  Currently the log will be visible only from the monitor using a special command, which will take care of reading the log files of the single instance of the service you choose to view in real time.
 - **servers** => In this field, on the other hand, the various services that will be executed by the ipod                  are saved.
+
+#### Active Service log file
+As for the structure of the .services file this is defined as follow:
+- Service-Name || State || Port-Number
+The default scan will currently only cover the identification of active services on known ports. So for example a .services log file should be:
+> http  ||  open    ||  80
+> ftp   ||  open    ||  22
+> https ||  closed  ||  8443

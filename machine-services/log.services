@@ -1,0 +1,3 @@
+http    ||  open    ||  80
+ftp     ||  open    ||  22
+https   ||  closed  ||  8443

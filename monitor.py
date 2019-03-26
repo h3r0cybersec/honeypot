@@ -15,6 +15,7 @@
 from manager import manager
 from lib.utils.utils import message
 import os
+import sys
 
 class monitor(object):
     """
@@ -29,8 +30,10 @@ class monitor(object):
     __author__  = "cavallo luigi"
     __email__ = "luigi.cavallo_lc@libero.it"
 
-    def __init__(self, machine_services, server_config):
-        # Config option of active service that must be initialized
+    def __init__(self, machine_services: object, server_config: object):
+        # Services file position 
+        self.root_service_log = os.path.join("machine-services", machine_services)
+        # Config options of active services that must be initialized
         self.__server_config = self.__retrive_active_services()
         # Services Manager
         self.__manager = manager(self.__server_config)
@@ -59,7 +62,6 @@ class monitor(object):
                 """
                 pass
             elif cmd == "kill":
-                # Kill a runnig service or a list of running services
                 """
                     This command allows you kill a runnig service or
                     a list of running services
@@ -77,6 +79,18 @@ class monitor(object):
             in the server configuration file. If this operation
             fails so generate an error an block execution of 
             services manager.
+
+            @return : active_services
         """
-        pass
+        active_services = []
+        with open(self.root_service_log) as fd:
+            for info in fd.readlines():
+                proto, status, port = info.split("||")
+                if status.strip() == "open":
+                    active_services.append(proto.strip())
+        return active_services
+
+
+m = monitor("log.services", "config-test.json")
+
 

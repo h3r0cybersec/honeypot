@@ -12,19 +12,22 @@
 import os
 from lib.utils.utils import message
 from importlib import import_module
+from json import loads
 
 class manager(object):
     """
         Load and start servers instance from the configuration file
     """
     
-    def __init__(self, config_obj):
-        # active service instances
+    def __init__(self, active_obj):
+        # Services file config
+        self.root_service_cfg = os.path.join("services-cfg", active_obj)
+        # active service instances populated after start_service execution
         self.__service_instances = []
         # loggers
-        self.__loggers = {}
+        self.__loggers = []
         # active service configurations
-        self.__fileconfig = self.__load_configuration(config_obj)
+        self.__services_to_activate = self.__load_configuration(active_obj)
 
     def start_service(self):
         """
@@ -45,11 +48,13 @@ class manager(object):
         # TODO: Must check if instance is really active
         pass
         
-    def __load_configuration(self, config):
+    def __load_configuration(self, active):
         """
-            Load configurations
-            @param config: JSON obj that contain all configurations
+            In base of 'active' service found on system, this
+            method loads only the configuration for active 
+            service, from del service configuration file.
+            @param active: list of active services
         """
-        pass
-
-
+        with loads(self.root_service_cfg) as config:
+            print(config)
+        
